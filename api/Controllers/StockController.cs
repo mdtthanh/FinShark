@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Data;
-using Microsoft.AspNetCore.Components;
+using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/stock")]
+    [Route("api/stock")]
     [ApiController]
     public class StockController : ControllerBase
     {
@@ -21,20 +17,20 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-                var stocks = _context.Stocks.ToList();
-                return Ok(stocks);
+            var stocks = _context.Stocks.ToList().Select(x => x.ToStockDto());
+            return Ok(stocks);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
             var stocks = _context.Stocks.Find(id);
-            if (stocks == null) 
+            if (stocks == null)
             {
                 return NotFound();
             }
 
-            return Ok(stocks);
+            return Ok(stocks.ToStockDto());
         }
     }
 }
