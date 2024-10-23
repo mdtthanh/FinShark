@@ -42,4 +42,6 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
-.obj/Debug
+api/obj/Debug
+api/bin
+api/appsettings.json
