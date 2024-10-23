@@ -16,7 +16,7 @@ namespace api.Mappers
                 Id = stockModel.Id,
                 Symbol = stockModel.Symbol,
                 CompanyName = stockModel.CompanyName,
-                // Purchase = stockModel.Purchase,
+                Purchase = stockModel.Purchase,
                 LastDiv = stockModel.LastDiv,
                 MarketCap = stockModel.MarketCap
                 
