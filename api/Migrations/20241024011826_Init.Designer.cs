@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241015165740_init")]
-    partial class init
+    [Migration("20241024011826_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,9 @@ namespace api.Migrations
 
                     b.Property<long>("MarketCap")
                         .HasColumnType("bigint");
+
+                    b.Property<decimal>("Purchase")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Symbol")
                         .IsRequired()
