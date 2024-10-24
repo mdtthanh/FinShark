@@ -7,14 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> dbContextOptions) : DbContext(dbContextOptions)
     {
-        public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public required DbSet<Stock> Stocks { get; set; }
+        public required DbSet<Comment> Comments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
+            // Add any custom configurations here
         }
-
-        public DbSet<Stock> Stocks { get; set; }
-        public DbSet<Comment> Comments { get; set; }
     }
 }

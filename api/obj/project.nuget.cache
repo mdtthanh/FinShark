@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OW5vr0ffhRX6hS6LBwWireNPJX4cSwRQB15ztIAsAVTTwpA2oO3lbG6T6dv+1qN7PpvVREAuSdLxPXijdwxErA==",
+  "dgSpecHash": "cVCRQr9fZsO4uHB7Z1mt+QAUEFNmVOmr+oR3TUag1wVdjy3nkY8mAtn9lb3fA+tjQtVAvqZtp7LQ2G/KRAUm6w==",
   "success": true,
   "projectFilePath": "D:\\Workspace\\FinShark\\api\\api.csproj",
   "expectedPackageFiles": [
@@ -88,5 +88,12 @@
     "C:\\Users\\maith\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\maith\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\Workspace\\FinShark\\api\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
