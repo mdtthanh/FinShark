@@ -2,7 +2,7 @@ using api.Data;
 using api.Dtos;
 using api.Dtos.Stock;
 using api.Interfaces;
-using api.Mappers;
+using api.Mapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

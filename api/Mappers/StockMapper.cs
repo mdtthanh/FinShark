@@ -6,9 +6,9 @@ using api.Dtos;
 using api.Dtos.Stock;
 using api.Models;
 
-namespace api.Mappers
+namespace api.Mapper
 {
-    public static class StockMappers
+    public static class StockMapper
     {
         public static StockDtos ToStockDto(this Stock stockModel)
         {
