@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
+    [Route("api/comment")]
+    [ApiController]
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository _commentRepo;

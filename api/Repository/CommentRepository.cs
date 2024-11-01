@@ -30,14 +30,9 @@ namespace api.Repository
             return await _context.Comments.ToListAsync();
         }
 
-        public async Task<Comment> GetByIdAsync(int id)
+        public async Task<Comment?> GetByIdAsync(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
-            if (comment == null)
-            {
-                throw new KeyNotFoundException($"Comment with ID {id} not found.");
-            }
-            return comment;
+            return await _context.Comments.FindAsync(id);
         }
 
         public Task UpdateAsync(Comment comment)
