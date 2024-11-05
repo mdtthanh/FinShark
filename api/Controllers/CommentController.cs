@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos.Comment;
 using api.Interfaces;
 using api.Mapper;
 using api.Models;
@@ -27,7 +28,6 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            // get all comments
             var comments = await _commentRepo.GetAllAsync();
             var commentDto = comments.Select(c => c.ToCommentDto());
             return Ok(commentDto);
@@ -43,13 +43,37 @@ namespace api.Controllers
             return Ok(comment);
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> Create([FromBody] Comment comment)
-        // {
-        //     await _commentRepo.CreateAsync(comment);
-        //     await _context.SaveChangesAsync();
-        //     return CreatedAtAction(nameof(GetAll), new { id = comment.Id }, comment);
-        // }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateCommentRequestDto commentDto)
+        {
+            var commentModel = commentDto.ToCommentFromCreateDTO();
+            await _commentRepo.CreateAsync(commentModel);
+            return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToCommentDto());
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto comment)
+        {
+            var commentModel = await _commentRepo.UpdateAsync(id, comment);
+            if (commentModel == null)
+            {
+                return NotFound();
+            }
+            return Ok(commentModel.ToCommentDto());
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var commentModel = await _commentRepo.DeleteAsync(id);
+            if (commentModel == null)
+            {
+                return NotFound();
+            }
+            return Ok(commentModel.ToCommentDto());
+        }
     }
 
 
