@@ -17,12 +17,14 @@ namespace api.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository _commentRepo;
+        private readonly IStockRepository _stockRepository;
         private readonly ApplicationDBContext _context;
 
-        public CommentController(ICommentRepository commentRepo, ApplicationDBContext context)
+        public CommentController(ICommentRepository commentRepo, IStockRepository stockRepository,  ApplicationDBContext context)
         {
             _commentRepo = commentRepo;
             _context = context;
+            _stockRepository = stockRepository;
         }
 
         [HttpGet]
@@ -32,7 +34,7 @@ namespace api.Controllers
             var commentDto = comments.Select(c => c.ToCommentDto());
             return Ok(commentDto);
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             var comment = await _commentRepo.GetByIdAsync(id);
@@ -43,16 +45,29 @@ namespace api.Controllers
             return Ok(comment);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateCommentRequestDto commentDto)
+        // [HttpPost]
+        // public async Task<IActionResult> Create([FromBody] CreateCommentRequestDto commentDto)
+        // {
+        //     var commentModel = commentDto.ToCommentFromCreateDTO();
+        //     await _commentRepo.CreateAsync(commentModel);
+        //     return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToCommentDto());
+        // }
+        [HttpPost("{stockId}")]
+        public async Task<IActionResult> Create([FromRoute] int stockId, [FromBody] CreateCommentRequestDto commentDto)
         {
-            var commentModel = commentDto.ToCommentFromCreateDTO();
+            if(!await _stockRepository.StockExists(stockId))
+            {
+                return BadRequest("Stock not found.");
+            }
+
+            var commentModel = commentDto.ToCommentFromCreateDTO(stockId);
+            commentModel.StockId = stockId;
             await _commentRepo.CreateAsync(commentModel);
             return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToCommentDto());
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto comment)
         {
             var commentModel = await _commentRepo.UpdateAsync(id, comment);
@@ -64,7 +79,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             var commentModel = await _commentRepo.DeleteAsync(id);
