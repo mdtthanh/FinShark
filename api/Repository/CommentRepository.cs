@@ -53,8 +53,8 @@ namespace api.Repository
             }
             commentModel.Title = commentDto.Title;
             commentModel.Content = commentDto.Content;
-            commentModel.CreatedOn = commentDto.CreatedOn;
-            commentModel.StockId = commentDto.StockId;
+            // commentModel.CreatedOn = commentDto.CreatedOn;
+            // commentModel.StockId = commentDto.StockId;
             await _context.SaveChangesAsync();
             return commentModel;
         }
