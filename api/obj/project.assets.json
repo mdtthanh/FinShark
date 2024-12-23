@@ -4491,24 +4491,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\maith\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\5530\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Workspace\\FinShark\\api\\api.csproj",
+      "projectUniqueName": "F:\\Workspace\\FinShark\\FinShark\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "D:\\Workspace\\FinShark\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\maith\\.nuget\\packages\\",
-      "outputPath": "D:\\Workspace\\FinShark\\api\\obj\\",
+      "projectPath": "F:\\Workspace\\FinShark\\FinShark\\api\\api.csproj",
+      "packagesPath": "C:\\Users\\5530\\.nuget\\packages\\",
+      "outputPath": "F:\\Workspace\\FinShark\\FinShark\\api\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\maith\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\5530\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4587,13 +4582,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file D:\\Workspace\\FinShark\\api\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }
