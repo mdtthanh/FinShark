@@ -18,15 +18,20 @@ namespace api.Service
         public TokenService(IConfiguration config)
         {
             _config = config;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"]));
+            var signingKey = _config["JWT:SigningKey"];
+            if (string.IsNullOrEmpty(signingKey))
+            {
+                throw new ArgumentNullException(nameof(signingKey), "JWT signing key is not configured.");
+            }
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
 
         }
         public string CreateToken(AppUser user)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName)
+                new Claim(JwtRegisteredClaimNames.Email, user.Email ?? throw new ArgumentNullException(nameof(user.Email))),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName ?? throw new ArgumentNullException(nameof(user.UserName)))
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
