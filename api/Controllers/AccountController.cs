@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using api.Dtos.Account;
-using api.Interfaces; // Assuming AppUser is defined in the Models namespace
+using api.Interfaces;
+using Microsoft.EntityFrameworkCore; // Assuming AppUser is defined in the Models namespace
 
 namespace api.Controllers
 {
@@ -16,11 +17,46 @@ namespace api.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService)
+        private readonly SignInManager<AppUser> _signInManager;
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _tokenService = tokenService;
+            _signInManager = signInManager;
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto loginDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (string.IsNullOrEmpty(loginDto.UserName))
+                return BadRequest("Username cannot be null or empty.");
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName.ToLower());
+
+            if (user == null)
+                return Unauthorized("Invalid username");
+
+            if (string.IsNullOrEmpty(loginDto.Password))
+                return BadRequest("Password cannot be null or empty.");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if(!result.Succeeded)
+                return Unauthorized("Username not found and/or");
+
+            return Ok(
+                new NewUserDto
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Token = _tokenService.CreateToken(user)
+                }
+            );
+            
+            
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
