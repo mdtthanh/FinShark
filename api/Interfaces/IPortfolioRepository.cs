@@ -6,11 +6,8 @@ using api.Models;
 
 namespace api.Interfaces
 {
-    public class IPortfolioRepository
+    public interface IPortfolioRepository
     {
-        Task<List<Stock>> GetUserPortfolio(AppUser user)
-        {
-            throw new NotImplementedException();
-        }
+        Task<List<Stock>> GetUserPortfolio(AppUser user);
     }
 }
